@@ -1,6 +1,8 @@
-# RAGent: Context-Grounded RAG Agent
+# RAGent: Your Personal & Customer Knowledge Brain
 
-RAGent is a Retrieval-Augmented Generation (RAG) agent that answers questions strictly using provided context documents. It supports local and remote LLMs (Ollama, OpenAI), local embeddings, and per-client knowledge base selection.
+**RAGent lets you store your own (or your customers') documents and use them as a smart helper for complex, context-specific questions.**
+
+> Never struggle to remember all the details again—just upload your content, select the context, and ask! RAGent will answer strictly from your chosen documents, acting as an external brain for your projects, clients, or personal knowledge.
 
 ## Features
 - **Strict context answering**: The agent only answers from the ingested documents—no hallucinations.
@@ -19,9 +21,41 @@ RAGent is a Retrieval-Augmented Generation (RAG) agent that answers questions st
 
 ---
 
-## Quickstart
+## Quick Start
+1. **Install dependencies**
+   ```sh
+   pip install -r requirements.txt
+   ```
+2. **Configure environment**
+   - Copy `.env.example` to `.env` and set your API keys and model names.
+   - Example:
+     ```
+     OPENAI_API_KEY=sk-...
+     LLM_BACKEND=openai   # or ollama
+     OPENAI_MODEL=gpt-4o  # or gpt-4, etc.
+     EMBEDDING_BACKEND=hf # or ollama/openai
+     ```
+3. **Add your customer or project content**
+   - Place `.txt` files inside folders under `data/` (e.g., `data/ClientA/`, `data/ProjectX/`, `data/facts/`).
+   - Each folder is a separate knowledge base (brain) for a client, project, or topic.
+   - Example folder structure:
+     ```
+     data/
+       Broadridge/
+         onboarding.txt
+         api_endpoints.txt
+       facts/
+         team.txt
+         mission.txt
+     ```
+4. **Run the agent**
+   ```sh
+   python -m src.main
+   ```
+   - Select the context folder (e.g., `Broadridge`) at the prompt.
+   - Ask your question. RAGent will answer using only the selected folder’s content.
 
-### 1. Clone & Setup
+## Example Usage
 ```sh
 git clone <this-repo>
 cd RAGent
