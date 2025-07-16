@@ -6,11 +6,11 @@
 
 <p align="center"><i>RAGent: A wise helper for your knowledge forests.</i></p>
 
-> **You can use commercial (OpenAI) or local (Ollama) language models. For sensitive or private data, use a local model so nothing is ever sent to the cloud.**
-
 **RAGent lets you store your own (or your customers') documents and use them as a smart helper for complex, context-specific questions.**
 
 > Never struggle to remember all the details again—just upload your content, select the context, and ask! RAGent will answer strictly from your chosen documents, acting as an external brain for your projects, clients, or personal knowledge.
+
+> **Privacy:** You can use commercial (OpenAI) or local (Ollama) language models. For sensitive or private data, use a local model so nothing is ever sent to the cloud.
 
 ## Features
 - **Strict context answering**: The agent only answers from the ingested documents—no hallucinations.
