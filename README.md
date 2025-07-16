@@ -1,5 +1,11 @@
 # RAGent: Your Personal & Customer Knowledge Brain
 
+<p align="center">
+  <img src="assets/ragent_project.png" alt="RAGent Project Logo" width="300"/>
+</p>
+
+<p align="center"><i>RAGent: A wise helper for your knowledge forests.</i></p>
+
 > **You can use commercial (OpenAI) or local (Ollama) language models. For sensitive or private data, use a local model so nothing is ever sent to the cloud.**
 
 **RAGent lets you store your own (or your customers') documents and use them as a smart helper for complex, context-specific questions.**
