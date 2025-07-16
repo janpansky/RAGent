@@ -1,5 +1,7 @@
 # RAGent: Your Personal & Customer Knowledge Brain
 
+> **You can use commercial (OpenAI) or local (Ollama) language models. For sensitive or private data, use a local model so nothing is ever sent to the cloud.**
+
 **RAGent lets you store your own (or your customers') documents and use them as a smart helper for complex, context-specific questions.**
 
 > Never struggle to remember all the details again—just upload your content, select the context, and ask! RAGent will answer strictly from your chosen documents, acting as an external brain for your projects, clients, or personal knowledge.
@@ -36,14 +38,17 @@
      EMBEDDING_BACKEND=hf # or ollama/openai
      ```
 3. **Add your customer or project content**
-   - Place `.txt` files inside folders under `data/` (e.g., `data/ClientA/`, `data/ProjectX/`, `data/facts/`).
+   - Place `.txt` files inside folders under `data/` (e.g., `data/clientA/`, `data/clientB/`, `data/facts/`).
    - Each folder is a separate knowledge base (brain) for a client, project, or topic.
    - Example folder structure:
      ```
      data/
-       Broadridge/
+       clientA/
          onboarding.txt
          api_endpoints.txt
+       clientB/
+         requirements.txt
+         meeting_notes.txt
        facts/
          team.txt
          mission.txt
@@ -52,7 +57,7 @@
    ```sh
    python -m src.main
    ```
-   - Select the context folder (e.g., `Broadridge`) at the prompt.
+   - Select the context folder (e.g., `clientA`) at the prompt.
    - Ask your question. RAGent will answer using only the selected folder’s content.
 
 ## Example Usage
@@ -67,11 +72,11 @@ pip install -r requirements.txt
 ### 2. Add Knowledge Base
 Put your `.txt` files in a folder, e.g.:
 ```
-data/facts/facts.txt
+data/clientA/clientA.txt
 ```
 Example content:
 ```
-The capital city of Spain is Prague.
+The clientA project involves creating a new API endpoint.
 ```
 
 ### 3. Configure `.env`
