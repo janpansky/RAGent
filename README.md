@@ -118,15 +118,30 @@ python -m src.main --backend openai --model gpt-4
 
 ---
 
+## Advanced RAG Pipeline (Future Directions)
+
+RAGent is designed for reliability and simplicity, but can be extended with advanced techniques from the latest RAG research, such as:
+
+- **Multi-hop Reasoning / Chain-of-Thought**: Answer complex questions that require combining information from multiple documents or steps.
+- **Query Rewriting / Self-Refinement**: Automatically rephrase or expand your question to improve retrieval.
+- **Retrieval Fusion / Re-ranking**: Combine results from multiple retrieval methods (keyword, vector, etc.) and re-rank them for relevance.
+- **Tool-Augmented or Agentic RAG**: Let the agent use plugins, calculators, or external APIs as part of its answer process.
+- **Answer Verification / Self-Consistency**: Double-check answers or generate multiple candidates to select the most reliable response.
+- **Long-Context Handling / Summarization**: Summarize or synthesize information across many documents for concise overviews.
+
+For a comprehensive list of state-of-the-art RAG methods and resources, see:
+
+[Awesome-RAG-Reasoning](https://github.com/DavidZWZ/Awesome-RAG-Reasoning)
+
 ## Usage
 - Ask questions about your documents interactively.
 - The agent retrieves relevant context and answers, grounded ONLY in your knowledge base.
-- Example:
+- Example (project-specific context):
   ```
-  You: What is the capital city of Spain?
+  You: What is the onboarding code for clientA?
   [Retrieved context]:
-    [1] The capital city of Spain is Prague.
-  Agent: The capital city of Spain is Prague.
+    [1] The onboarding code for clientA is XJ-42B.
+  Agent: The onboarding code for clientA is XJ-42B.
   ```
 
 ## Switching LLMs
