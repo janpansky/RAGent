@@ -1,5 +1,8 @@
 # RAGent: Your Personal & Customer Knowledge Brain
 
+> Local-first RAG assistant: query your own docs with LLMs (OpenAI/Ollama). Fast, private, and context-grounded answers.
+
+
 <p align="center">
   <img src="assets/ragent_project.png" alt="RAGent Project Logo" width="300"/>
 </p>
@@ -70,6 +73,14 @@ pip install -r requirements.txt
 - **Note:** If you use `EMBEDDING_BACKEND=hf`, make sure `sentence-transformers` is installed (already included in requirements.txt).
 
 ### 3. Add your customer or project content
+
+**⚠️ The `data` folder (with at least one client/project subfolder) must exist before starting the app!**
+
+To create the folders from your project root:
+```sh
+mkdir -p data/ClientA
+```
+
 - Place `.txt` files inside folders under `data/` (e.g., `data/clientA/`, `data/clientB/`, `data/facts/`).
 - Each folder is a separate knowledge base (brain) for a client, project, or topic.
 - Example folder structure:
