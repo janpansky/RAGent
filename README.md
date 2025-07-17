@@ -14,12 +14,12 @@
 
 ## Features
 - **Strict context answering**: The agent only answers from the ingested documents—no hallucinations.
+- **Concise answers**: By default, the agent responds in one sentence.
 - **Multi-client support**: Choose a context folder at startup for per-client/document QA.
 - **Local & remote LLMs**: Use OpenAI (gpt-4o, gpt-4, etc.) or Ollama (local models).
 - **Local embeddings**: Uses HuggingFace sentence-transformers or Ollama for embeddings; avoids OpenAI quota issues.
-- Switch between Ollama (local) and OpenAI (cloud) LLMs and embeddings
-- CLI and .env config for backend/model switching
-- Customer/document separation via folders
+- **Flexible backend and embedding selection:** Instantly switch between Ollama (local) and OpenAI (cloud) LLMs and embeddings using CLI flags or the `.env` file.
+- **Per-client/project isolation:** Keep each customer's or project's documents in separate folders for clean, context-specific retrieval.
 
 ## Architecture
 
@@ -30,6 +30,75 @@
 ---
 
 ## Quick Start
+
+### Ollama (Local LLM) Setup
+To use local models, you need [Ollama](https://ollama.com/) installed and running:
+1. **Install Ollama:** See [Ollama downloads](https://ollama.com/download) for your OS.
+2. **Start Ollama:** Run `ollama serve` or start the Ollama app.
+3. **Pull a model:** For example: `ollama pull llama2` or your chosen model (e.g. `deepseek-r1:8b`).
+4. **Configure `.env`:** Set `LLM_BACKEND=ollama`, `OLLAMA_MODEL=llama2` (or your chosen model), and `EMBEDDING_BACKEND=hf` (or `ollama`/`openai`).
+
+**If you do not want to use Ollama:**
+- Set `LLM_BACKEND=openai` and provide your OpenAI API key and model in `.env.template`.
+
+**Troubleshooting:**
+- If you see errors like "Could not connect to Ollama" or "model not found," make sure Ollama is running and the model is pulled.
+
+### 1. Install dependencies
+```sh
+pip install -r requirements.txt
+```
+
+### 2. Configure environment
+- Copy `.env.template` to `.env` and set your API keys and model names.
+- Example for OpenAI:
+  ```
+  OPENAI_API_KEY=sk-...
+  LLM_BACKEND=openai   # or ollama
+  OPENAI_MODEL=gpt-4o  # or gpt-4, etc.
+  EMBEDDING_BACKEND=hf # or ollama/openai
+  ```
+- Example for Ollama:
+  ```
+  LLM_BACKEND=ollama
+  OLLAMA_BASE_URL=http://localhost:11434
+  OLLAMA_MODEL=llama2
+  EMBEDDING_BACKEND=hf # or ollama/openai
+  DATA_ROOT=data
+  CHROMA_DB_DIR=chroma_db
+  ```
+- **Note:** If you use `EMBEDDING_BACKEND=hf`, make sure `sentence-transformers` is installed (already included in requirements.txt).
+
+### 3. Add your customer or project content
+- Place `.txt` files inside folders under `data/` (e.g., `data/clientA/`, `data/clientB/`, `data/facts/`).
+- Each folder is a separate knowledge base (brain) for a client, project, or topic.
+- Example folder structure:
+  ```
+  data/
+    clientA/
+      onboarding.txt
+      api_endpoints.txt
+    clientB/
+      requirements.txt
+      meeting_notes.txt
+    facts/
+      team.txt
+      mission.txt
+  ```
+
+### 4. Run the agent
+```sh
+python -m src.main
+```
+- Select the context folder (e.g., `clientA`) at the prompt.
+- Ask your question. RAGent will answer using only the selected folder’s content.
+
+### 5. (Optional) Override backend/model via CLI
+```sh
+python -m src.main --backend ollama --model llama2
+python -m src.main --backend openai --model gpt-4o
+```
+
 
 ### Ollama (Local LLM) Setup
 To use local models, you need [Ollama](https://ollama.com/) installed and running:
@@ -80,55 +149,6 @@ To use local models, you need [Ollama](https://ollama.com/) installed and runnin
    - Select the context folder (e.g., `clientA`) at the prompt.
    - Ask your question. RAGent will answer using only the selected folder’s content.
 
-## Example Usage
-```sh
-git clone <this-repo>
-cd RAGent
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### 2. Add Knowledge Base
-Put your `.txt` files in a folder, e.g.:
-```
-data/clientA/clientA.txt
-```
-Example content:
-```
-The clientA project involves creating a new API endpoint.
-```
-
-### 3. Configure `.env`
-Create a `.env` in the project root. Example for Ollama:
-```
-LLM_BACKEND=ollama
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=llama2
-DATA_ROOT=data
-CHROMA_DB_DIR=chroma_db
-```
-For OpenAI:
-```
-LLM_BACKEND=openai
-OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4o
-DATA_ROOT=data
-CHROMA_DB_DIR=chroma_db
-```
-
-### 4. Run the Agent
-
-#### Default (uses `.env`):
-```sh
-python -m src.main
-```
-
-#### Override backend/model via CLI:
-```sh
-python -m src.main --backend ollama --model llama2
-python -m src.main --backend openai --model gpt-4
-```
 
 ---
 
@@ -150,6 +170,7 @@ For a comprehensive list of state-of-the-art RAG methods and resources, see:
 ## Usage
 - Ask questions about your documents interactively.
 - The agent retrieves relevant context and answers, grounded ONLY in your knowledge base.
+- Answers are concise—by default, the agent responds in one sentence.
 - Example (project-specific context):
   ```
   You: What is the onboarding code for clientA?
@@ -164,6 +185,14 @@ For a comprehensive list of state-of-the-art RAG methods and resources, see:
 
 ## Adding More Data
 - Add more `.txt` files to your data folder and rerun the agent.
+
+---
+
+## Troubleshooting
+- **Ollama errors:** Make sure you have [Ollama](https://ollama.com/) installed, running, and the model pulled (e.g. `ollama pull llama2`).
+- **OpenAI errors:** Ensure your API key is set in `.env` and you have access to the selected model.
+- **Embeddings:** If using `EMBEDDING_BACKEND=hf`, confirm that `sentence-transformers` is installed (it is included in requirements.txt).
+- **General:** If you see unexpected errors, check your `.env` configuration and the README examples.
 
 ## Roadmap
 - PDF/HTML support
