@@ -30,6 +30,20 @@
 ---
 
 ## Quick Start
+
+### Ollama (Local LLM) Setup
+To use local models, you need [Ollama](https://ollama.com/) installed and running:
+1. **Install Ollama:** See [Ollama downloads](https://ollama.com/download) for your OS.
+2. **Start Ollama:** Run `ollama serve` or start the Ollama app.
+3. **Pull a model:** For example: `ollama pull llama2` or your chosen model (e.g. `deepseek-r1:8b`).
+4. **Configure `.env`:** Set `LLM_BACKEND=ollama` and `OLLAMA_MODEL=llama2` (or your chosen model).
+
+**If you do not want to use Ollama:**
+- Set `LLM_BACKEND=openai` and provide your OpenAI API key and model in `.env`.
+
+**Troubleshooting:**
+- If you see errors like "Could not connect to Ollama" or "model not found," make sure Ollama is running and the model is pulled.
+
 1. **Install dependencies**
    ```sh
    pip install -r requirements.txt
